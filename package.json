@@ -1,0 +1,22 @@
+{
+  "name": "flatdango",
+  "version": "1.0.0",
+  "description": "This is a movie theatre application",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/venus714/flatdango.git"
+  },
+  "author": "Venus kabera",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/venus714/flatdango/issues"
+  },
+  "homepage": "https://github.com/venus714/flatdango#readme",
+  "dependencies": {
+    "json-server": "^0.17.1"
+  }
+}
