@@ -15,9 +15,9 @@ Open it in Visual Studio Code: code .
 
 run this command to get backend started: json-server--watch db.json
 
-test server by copy-pasting this URL in your browser
+Open the application by navigating into this link
 
-"http://localhost:3000/films"
+https://venus714.github.io/flatdango/
 
 
 ## Authors
