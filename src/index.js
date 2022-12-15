@@ -1,4 +1,4 @@
-const link='http://localhost:3000/films'
+const link='https://venus714.github.io/dbjson/db.json'
 function getMovies(){
     fetch(link)
         .then((response) => response.json()) 
@@ -68,3 +68,4 @@ function getMovies(){
           buyTicket()
         
         
+          
