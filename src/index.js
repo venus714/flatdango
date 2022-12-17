@@ -1,71 +1,85 @@
-const link='https://venus714.github.io/dbjson/db.json'
-function getMovies(){
-    fetch(link)
-        .then((response) => response.json()) 
-        .then((data) =>{
-            data.forEach(() =>{
+const url='https://venus714.github.io/dbjson/db.json'
+const listHolder = document.querySelector('.films ul')
+document.querySelector('#poster');
 
-              let li = document.createElement("li");
-              li.textContent = films.title;
-              li.addEventListener("click", 
-                (e)=>{let buttonContent =
-                document.querySelector("button#buy-ticket")
+document.addEventListener('DOMContentLoaded', () => {
+    fetchM(url)
 
-                buttonContent.textContent = "Buy Tickets"
-                let title =
-                document.getElementById("movie-title");
-                   title.textContent =
-               films.title;
-               let img =
-               document.getElementById("movie-poster");
-                  
-               films.poster;
-               
-               let showTime =
-               document.getElementById("showtime");
-                 showTime.textContent =
-               films.showtime;
-               
-               let runTime =
-               document.getElementById("runtime");
-                 runTime.textContent =
-               `${films.runtime} Minutes`;
-            
-               let tickets =
-               document.querySelector("div#ticket-counter");
-                     tickets.textContent = films["capacity"] - films["tickets_sold"]
-                 })
-                 document.querySelector("ul#films").appendChild(li)
-             })
-         })
-     }getMovies()
+})
 
 
-     function baseMovie(){ fetch(link)
+function fetchM(url) {
+    fetch(url)
         .then(response => response.json())
-        .then(data => {
-        document.querySelector("h3#movie-title").textContent = data[0]["title"]
-        document.querySelector("img#movie-posters").setAttribute("src",`${data[0]["poster"]}`)
-        document.querySelector("div#showtime").textContent = data[0]["showtime"]
-        document.querySelector("div#runtime").textContent = `${data[0]["runtime"]} Minutes`
-        document.querySelector("ul#films").firstElementChild.remove()
-        document.querySelector("div#ticket-counter").textContent = data[0]["capacity"] - data[0]["tickets_sold"]
-         })
-         }
-        baseMovie()
+        .then(movies => {
+            
+            movies.films.forEach(movie => {
+                displayMovie(movie)
+            });
+        })
 
-        function buyTicket(){
-            let button = document.querySelector("button#buy-ticket")
-            button.addEventListener("click",function(){
-            let currentLi = document.querySelector("div#ticket-counter")
-            let number = parseInt(currentLi.textContent)
-            if(number > 0){
-            currentLi.textContent = currentLi.textContent -1}
-            else{document.querySelector("button#buy-ticket").textContent = "TICKETS SOLD OUT"
-                
-          }
-            })}
-          buyTicket()
+}
+function displayMovie(movie) {
+
+    const li = document.createElement('li')
+    li.style.cursor = "pointer"
+    li.textContent = (movie.title).toUpperCase()
+    listHolder.appendChild(li)
+    
+    li.addEventListener('click',(event)=>{
         
-        
-          
+        poster.src = movie.poster;
+        addClickEvent(event)
+    })
+    
+}
+
+function addClickEvent(url){
+    let children=listHolder.children
+
+    for(let i=0; i<children.length; i++){
+        let child=children[i]
+
+        child.addEventListener('click',() => {
+            
+            fetch(`${url}/${i+1}`)
+           
+
+            .then(res => res.json())
+            .then(movie => {
+                document.getElementById('buy-ticket').textContent = 'Buy Ticket'
+                MovieDetails(movie)
+            })
+
+        })
+    }
+}
+addClickEvent(url)
+function MovieDetails(childMovie) {
+    const preview = document.getElementById('poster')
+    preview.src = childMovie.poster;
+
+    const movieTitle = document.querySelector('#title');
+    movieTitle.textContent = childMovie.title;
+    const movieTime = document.querySelector('#runtime');
+    movieTime.textContent = `${childMovie.runtime} minutes`;
+    const movieDescription = document.querySelector('#film-info');
+    movieDescription.textContent = childMovie.description;
+    const showTime = document.querySelector('#showtime')
+    showTime.textContent = childMovie.showtime;
+    const tickets = document.querySelector('#ticket-num')
+    tickets.textContent = childMovie.capacity - childMovie.tickets_sold;
+}
+const btn = document.getElementById('buy-ticket')
+
+btn.addEventListener('click', function (e) {
+    let remTickets = document.querySelector('#ticket-num').textContent
+    e.preventDefault()
+    if (remTickets > 0) {
+        document.querySelector('#ticket-num').textContent = remTickets - 1
+
+    }
+    else if (parseInt(remTickets, 10) === 0) {
+        btn.textContent = 'Sold Out'
+    }
+})
