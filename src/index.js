@@ -4,58 +4,36 @@ document.querySelector('#poster');
 
 document.addEventListener('DOMContentLoaded', () => {
     fetchM(url)
-
 })
-
-
 function fetchM(url) {
     fetch(url)
         .then(response => response.json())
-        .then(movies => {
-            
+        .then(movies => { 
             movies.films.forEach(movie => {
                 displayMovie(movie)
-            });
-        })
-
-}
+            })})}
 function displayMovie(movie) {
-
     const li = document.createElement('li')
     li.style.cursor = "pointer"
     li.textContent = (movie.title).toUpperCase()
     listHolder.appendChild(li)
-    
     li.addEventListener('click',(event)=>{
-        
-        poster.src = movie.poster;
+         poster.src = movie.poster;
         addClickEvent(event)
-    })
-    
-}
-
+    })}
 function addClickEvent(url){
-    let children=listHolder.children
-
-    for(let i=0; i<children.length; i++){
+ let children=listHolder.children
+ for(let i=0; i<children.length; i++){
         let child=children[i]
-
-        child.addEventListener('click',() => {
-            
-            fetch(`${url}/${i+1}`)
-           
-
-            .then(res => res.json())
-            .then(movie => {
-                document.getElementById('buy-ticket').textContent = 'Buy Ticket'
-                MovieDetails(movie)
-            })
-
-        })
-    }
-}
+child.addEventListener('click',() => {
+    fetch(`${url}/${i+1}`)
+  .then(res => res.json())
+  .then(movie => {
+   document.getElementById('buy-ticket').textContent = 'Buy Ticket'
+   MovieD(movie)
+            })})}}
 addClickEvent(url)
-function MovieDetails(childMovie) {
+function MovieD(childMovie) {
     const preview = document.getElementById('poster')
     preview.src = childMovie.poster;
 
